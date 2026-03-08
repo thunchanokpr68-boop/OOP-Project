@@ -6,30 +6,23 @@ class Card:
     def __init__(self, index, emoji, r, c):
         self.index = index
         self.emoji = emoji
-        # รักษาสัดส่วนและการจัดวางเดิมเป๊ะๆ
         self.rect = pygame.Rect(c * 150 + 10, r * 150 + 10, 130, 130)
-        self.state = 0  # 0: hidden, 1: opening, 2: open, 3: closing
+        self.state = 0  # 0: hidden, 1: flipping open, 2: opened, 3: flipping closed
         self.flip_frame = 0
 
     def update(self):
         if self.state == 1:
             self.flip_frame += 15
-            if self.flip_frame >= 180:
-                self.flip_frame = 180
-                self.state = 2
+            if self.flip_frame >= 180: self.flip_frame = 180; self.state = 2
         elif self.state == 3:
             self.flip_frame -= 15
-            if self.flip_frame <= 0:
-                self.flip_frame = 0
-                self.state = 0
+            if self.flip_frame <= 0: self.flip_frame = 0; self.state = 0
 
     def draw(self, screen):
         angle = math.radians(self.flip_frame)
         width = 130 * abs(math.cos(angle))
-        
-        # คำนวณ Rect ใหม่เพื่อให้ภาพพลิกแบบ 3D
         display_rect = pygame.Rect(self.rect.x + (130 - width) / 2, self.rect.y, width, 130)
-
+        
         if self.flip_frame < 90:
             pygame.draw.rect(screen, CARD_BACK, display_rect, border_radius=15)
             pygame.draw.rect(screen, ACCENT, display_rect, 2, border_radius=15)
