@@ -7,7 +7,7 @@ class Card:
         self.index = index
         self.emoji = emoji
         self.rect = pygame.Rect(c * 150 + 10, r * 150 + 10, 130, 130)
-        self.state = 0  # 0: hidden, 1: flipping open, 2: opened, 3: flipping closed
+        self.state = 0  
         self.flip_frame = 0
 
     def update(self):
